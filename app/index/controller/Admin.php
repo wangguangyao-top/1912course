@@ -13,7 +13,7 @@ class Admin
         return 'hello,' . $name;
     }
     public function abc(){
-        echo 123;
+        echo "吴孟林到此一游";
         return view('index@Admin/index');
     }
 }
