@@ -1,10 +1,10 @@
 <?php
 namespace app\index\controller;
 
-class Bank
+class Askarea
 {
     public function index()
     {
-        return view("bank");
+        return view("askarea");
     }
 }
