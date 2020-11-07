@@ -5,6 +5,6 @@ class Bank
 {
     public function bank()
     {
-        return view("index@index/bank/bank");
+        return view("bank");
     }
 }
