@@ -7,4 +7,9 @@ class Bank
     {
         return view("bank");
     }
+
+    public function secondary(){
+
+        return view('secondary');
+    }
 }

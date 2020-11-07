@@ -7,4 +7,8 @@ class Article
     {
         return view("article");
     }
+
+    public function ArtMinute(){
+        return view('ArtMinute');
+    }
 }
