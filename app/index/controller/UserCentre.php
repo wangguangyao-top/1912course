@@ -8,8 +8,25 @@ class UserCentre
      * @return \think\response\View
      *
      */
-    public function userCentre()
+    //我的课程
+    public function index()
     {
-        return view("userCentre");
+        return view("usercentre");
+    }
+    //我的问答
+    public function myask(){
+        return view('myask');
+    }
+    //我的笔记
+    public function mynote(){
+        return view('mynote');
+    }
+
+    public function mywork(){
+        return view('mywork');
+    }
+
+    public function mybank(){
+        return view('mybank');
     }
 }
