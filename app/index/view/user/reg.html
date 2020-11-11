@@ -6,32 +6,76 @@
 <link rel="stylesheet" href="/css/tab.css" media="screen">
 <script src="/js/jquery.tabs.js"></script>
 <script src="/js/mine.js"></script>
+<!--弹出框样式-->
+<!--图标库-->
+<link rel="stylesheet" href="/asset/css/all.min.css">
+
+<!--图标库-->
+<script src="/asset/js/all.min.js"></script>
+
+<!--核心样式-->
+<link rel="stylesheet" href="/asset/css/modallayer.min.css">
+
+<!--插件-->
+<script src="/asset/js/modallayer-ie.min.js"></script>
+<style>
+    #test-button-container {
+        position: absolute;
+        top: 50%;
+        left: 0px;
+        right: 0px;
+        width: 145px;
+        margin: 0px auto;
+        text-align: center;
+        transform: translateY(-50%);
+    }
+
+    #test-button-container button {
+        width: 145px;
+        margin: 5px 0px;
+        padding: 10px 0px;
+    }
+</style>
 <!-- InstanceBeginEditable name="EditRegion1" -->
 <div class="register" style="background:url(/images/13.jpg) right center no-repeat #fff">
     <h2>注册</h2>
     <form>
         <div>
-            <p class="formrow"><label class="control-label" for="register_email">邮箱地址</label>
-                <input type="text"></p>
-            <span class="text-danger">请输入邮箱地址</span>
+            <p class="formrow"><label class="control-label" for="register_email">用户名称<span
+                    style="color:red">*</span></label>
+                <input type="text" class="user_name" placeholder="用户名由数字，字母，中文、（8-32位）组成"></p>
+            <span class="text-danger span_name" style="color:red"></span>
         </div>
         <div>
-            <p class="formrow"><label class="control-label" for="register_email">昵称</label>
-                <input type="text"></p>
-            <span class="text-danger">该怎么称呼你？ 中、英文均可，最长14个英文或7个汉字</span>
+            <p class="formrow"><label class="control-label" for="register_email">手机号<span
+                    style="color:red">*</span></label>
+                <input type="text" class="user_tel" placeholder="请输入手机号"></p>
+            <span class="text-danger span_tel" style="color:red"></span>
         </div>
         <div>
-            <p class="formrow"><label class="control-label" for="register_email">密码</label>
-                <input type="password"></p>
-            <span class="text-danger">5-20位英文、数字、符号，区分大小写</span>
+            <p class="formrow"><label class="control-label" for="register_email">验证码<span
+                    style="color:red">*</span></label>
+                <input type="text" class="u_code" placeholder="验证码由6位数字组成">
+                <button type="button" class="cod">发送</button>
+            </p>
+            <span class="text-danger span_code" style="color:red"></span>
         </div>
         <div>
-            <p class="formrow"><label class="control-label" for="register_email">确认密码</label>
-                <input type="password"></p>
-            <span class="text-danger">再输入一次密码</span>
+            <p class="formrow"><label class="control-label" for="register_email">密码<span
+                    style="color:red">*</span></label>
+                <input type="password" class="user_pwd" placeholder="密码由数字，字母（8-16位）组成"></p>
+            <span class="text-danger span_pwd" style="color:red"></span>
+        </div>
+        <div>
+            <p class="formrow"><label class="control-label" for="register_email">确认密码<span
+                    style="color:red">*</span></label>
+                <input type="password" class="user_pwd2" placeholder="密码由数字，字母，中文（8-16位）组成"></p>
+            <span class="text-danger span_pwd2" style="color:red"></span>
         </div>
         <div class="loginbtn reg">
-            <button type="submit" class="uploadbtn ub1">注册</button>
+            <button type="button" class="uploadbtn ub1 but">注册</button>
+            &nbsp;&nbsp;|&nbsp;
+            <font size="1px"><a href="/index/user/login">已有账号前去登录?</a></font>
         </div>
 
     </form>
@@ -40,4 +84,351 @@
 
 
 <div class="clearh"></div>
+<script>
+    $(function () {
+            //用户名
+            name();
+            //手机号
+            tel();
+            //验证码
+            code();
+            //密码
+            pwd();
+            //确认密码
+            pwd2();
+            //成功弹框
+            function succ(face,suc='') {
+                let option = {
+                    popupTime: 2,
+                    hook: {
+                        initStart: function () {
+                            // 检查之前老旧实例如果存在则销毁
+                            if (document.querySelector('#modal-layer-container'))
+                                ModalLayer.removeAll();
+                        }
+                    },
+                    displayProgressBar: true,
+                    displayProgressBarPos: 'top',
+                    displayProgressBarColor: 'red',
+                    content: '<i class="fas fa-check" style="color: deepskyblue"></i>'+face+'!',
+                };
+                ModalLayer.msg(option);
+                if(suc==1){
+                    var str=0;
+                    var vm=setInterval(function(){
+                        str++;
+                        if(str>=2){
+                            location.href='/index/user/login';
+                            clearInterval(vm);
+                        }
+                    },1000);
+                }
+            }
+            //失败弹框
+            function err(face) {
+                let option = {
+                    hook: {
+                        initStart: function () {
+                            // 检查之前老旧实例如果存在则销毁
+                            if (document.querySelector('#modal-layer-container'))
+                                ModalLayer.removeAll();
+                        }
+                    },
+                    popupTime: 0,
+                    type: 'alert',
+                    title: '友情提示',
+                    dragOverflow: true,
+                    content: '<i class="fas fa-check" style="color: deepskyblue"></i>'+face+'!',
+                };
+                ModalLayer.alert(option);
+            }
+            //用户名
+            function user_name(_this) {
+                var user_name = _this.val();
+                var text = '用户名由数字，字母，中文（6-18位）组成';
+                var ret = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z\u4e00-\u9fa5]{6,18}$/;
+                if (user_name == '' || !ret.test(user_name)) {
+                    $('.span_name').text(text);
+                    return false;
+                }
+                $('.span_name').text('');
+            }
+            //用户名操作
+            function name() {
+                //用户文本监听
+                $('.user_name').on('input propertychange', function () {
+                    //监听文本框
+                    var _this = $(this);
+                    user_name(_this);
+                });
+                //用户失去焦点
+                $(document).on('blur', '.user_name', function () {
+                    var _this = $(this);
+                    user_name(_this);
+                })
+                //用户获取焦点
+                $(document).on('focus', '.user_name', function () {
+                    var _this = $(this);
+                    user_name(_this);
+                })
+            }
+
+            //手机号
+            function user_tel(_this) {
+                var user_tel = _this.val();
+                var tel = '手机号格式不正确';
+                var ret = /^1(?:3\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8\d|9\d)\d{8}$/
+                if (user_tel == '' || !ret.test(user_tel)) {
+                    $('.span_tel').text(tel);
+                    return false;
+                }
+                $('.span_tel').text('');
+
+            }
+            //手机号操作
+            function tel() {
+                //手机号监听
+                $('.user_tel').on('input propertychange', function () {
+                    //监听文本框
+                    var _this = $(this);
+                    user_tel(_this);
+                });
+                //手机号失去焦点
+                $(document).on('blur', '.user_tel', function () {
+                    var _this = $(this);
+                    user_tel(_this)
+                })
+                //手机号获取焦点
+                $(document).on('focus', '.user_tel', function () {
+                    var _this = $(this);
+                    user_tel(_this)
+                })
+            }
+
+            //验证码
+            function u_code(_this) {
+                var u_code = _this.val();
+                var tel = '验证码6位数字';
+                var ret = /^\d{6}$/;
+                if (u_code == '' || !ret.test(u_code)) {
+                    $('.span_code').text(tel);
+                    return false;
+                }
+                $('.span_code').text('');
+            }
+            //验证码操作
+            function code() {
+                //验证码监听
+                $('.u_code').on('input propertychange', function () {
+                    //监听文本框
+                    var _this = $(this);
+                    u_code(_this);
+                });
+                //验证码失去焦点
+                $(document).on('blur', '.u_code', function () {
+                    var _this = $(this);
+                    u_code(_this)
+                })
+                //验证码失去焦点
+                $(document).on('focus', '.u_code', function () {
+                    var _this = $(this);
+                    u_code(_this)
+                })
+            }
+
+            //密码
+            function user_pwd(_this) {
+                var user_pwd=_this.val();
+                var text='密码由数字，字母（8-16位组成）';
+                var ret = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/;
+                if(user_pwd=='' || !ret.test(user_pwd)){
+                    $('.span_pwd').text(text);
+                    return false;
+                }
+                $('.span_pwd').text('');
+            }
+            //密码执行
+            function pwd() {
+                //密码监听
+                $('.user_pwd').on('input propertychange', function () {
+                    //监听文本框
+                    var _this = $(this);
+                    user_pwd(_this);
+                });
+                //密码失去焦点
+                $(document).on('blur', '.user_pwd', function () {
+                    var _this = $(this);
+                    user_pwd(_this);
+                })
+                //密码获取焦点
+                $(document).on('focus', '.user_pwd', function () {
+                    var _this = $(this);
+                    user_pwd(_this);
+                })
+            }
+
+            //确人密码
+            function user_pwd2(_this) {
+                var user_pwd2=_this.val();
+                var text='密码由数字，字母（8-16位组成）';
+                var ret = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/;
+                if(user_pwd2=='' || !ret.test(user_pwd2)){
+                    $('.span_pwd2').text(text);
+                    return false;
+                }
+                var user_pwd=$('.user_pwd').val();
+                if(user_pwd!=user_pwd2){
+                    $('.span_pwd2').text('密码不一致');
+                    return false;
+                }
+                $('.span_pwd2').text('');
+            }
+            //确人密码执行
+            function pwd2() {
+                //密码监听
+                $('.user_pwd2').on('input propertychange', function () {
+                    //监听文本框
+                    var _this = $(this);
+                    user_pwd2(_this);
+                });
+                //密码失去焦点
+                $(document).on('blur', '.user_pwd2', function () {
+                    var _this = $(this);
+                    user_pwd2(_this);
+                })
+                //密码获取焦点
+                $(document).on('focus', '.user_pwd2', function () {
+                    var _this = $(this);
+                    user_pwd2(_this);
+                })
+            }
+            //发送验证码
+            $(document).on('click','.cod',function () {
+                var _this=$('.user_tel');
+                var user_tel = _this.val();
+                var tel = '手机号格式不正确';
+                var ret = /^1(?:3\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8\d|9\d)\d{8}$/
+                if (user_tel == '' || !ret.test(user_tel)) {
+                    $('.span_tel').text(tel);
+                    return false;
+                }
+                $('.span_tel').text('');
+                var user_tel2=_this.val();
+                var data={user_tel:user_tel2};
+                var url="__APIURL__/api/reg";
+                //触发定时器
+                var str=60;
+                var vm=setInterval(function(){
+                    str--;
+                    $('.cod').text(str);
+                    $(".cod").attr("disabled", true);
+                    if(str<=0){
+                        $(".cod").attr("disabled", false);
+                        $('.cod').text('发送');
+                        clearInterval(vm)
+                    }
+                },1000);
+                $.ajax({
+                    type:'post',
+                    url:url,
+                    data:data,
+                    dataType:'json',
+                    success:function (info) {
+                        var face=info.msg;
+                        if(info.code==200){
+                            succ(face)
+                        }else{
+                            $(".cod").attr("disabled", false);
+                            $('.cod').text('发送');
+                            clearInterval(vm);
+                            err(face);
+                        }
+                    }
+                })
+            })
+            //点击注册
+            $(document).on('click','.but',function () {
+                var fal=false;
+                //用户
+                var user_name=$('.user_name').val();
+                var text = '用户名由数字，字母，中文（6-18位）组成';
+                var ret = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z\u4e00-\u9fa5]{6,18}$/;
+                if (user_name == '' || !ret.test(user_name)) {
+                    $('.span_name').text(text);
+                    fal=false;
+                }else{
+                    fal=true;
+                    $('.span_name').text('');
+                }
+                //手机号
+                var user_tel=$('.user_tel').val();
+                var tel = '手机号格式不正确';
+                var tel_ret = /^1(?:3\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8\d|9\d)\d{8}$/
+                if (user_tel == '' || !tel_ret.test(user_tel)) {
+                    $('.span_tel').text(tel);
+                    fal=false;
+                }else{
+                    $('.span_tel').text('');
+                    fal=true;
+                }
+                //验证码
+                var u_code=$('.u_code').val();
+                var code_tel = '验证码6位数字';
+                var code_ret = /^\d{6}$/;
+                if (u_code == '' || !code_ret.test(u_code)) {
+                    $('.span_code').text(code_tel);
+                    fal=false;
+                }else{
+                    $('.span_code').text('');
+                    fal=true;
+                }
+                //密码
+                var user_pwd=$('.user_pwd').val();
+                var pwd_text='密码由数字，字母（8-16位组成）';
+                var pwd_ret = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/;
+                if(user_pwd=='' || !pwd_ret.test(user_pwd)){
+                    $('.span_pwd').text(pwd_text);
+                    fal=false;
+                }else{
+                    $('.span_pwd').text('');
+                    fal=true;
+                }
+                //确认密码
+                var user_pwd2=$('.user_pwd2').val();
+                if(user_pwd2=='' || !pwd_ret.test(user_pwd2)){
+                    $('.span_pwd2').text(pwd_text);
+                    fal=false;
+                }else{
+                    $('.span_pwd2').text('');
+                    fal=true;
+                }
+                if(fal!=true){
+                    return false;
+                }
+                if(user_pwd!=user_pwd2){
+                    $('.span_pwd2').text('密码不一致');
+                    return false;
+                }else{
+                    $('.span_pwd2').text('');
+                }
+                var url='__APIURL__/api/reg/userReg';
+                var data={user_name:user_name,user_pwd:user_pwd,user_pwd2:user_pwd2,user_tel:user_tel,u_code:u_code};
+                $.ajax({
+                    type:'post',
+                    url:url,
+                    data:data,
+                    dataType: 'json',
+                    success:function (info) {
+                        var face=info.msg;
+                        var suc=1;
+                        if(info.code==200){
+                            succ(face,suc);
+                        }else{
+                            err(face);
+                        }
+                    }
+                })
+            })
+    })
+</script>
 {/block}
