@@ -14,7 +14,7 @@ class Index extends Common
         $data = json_encode($data);
         $data = $this->http_post($url,$data);
         var_dump($data);
-
+        return view("index@index/index");
     }
 
 }
