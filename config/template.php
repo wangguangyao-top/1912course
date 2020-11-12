@@ -32,5 +32,6 @@ return [
     'taglib_end'   => '}',
     'tpl_replace_string'   => [
         '__APIURL__'   => 'http://www.tp6.com',
+        '__IMGURL__'   => 'http://www.tp7.com',
     ],
 ];

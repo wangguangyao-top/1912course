@@ -43,7 +43,7 @@
         <div>
             <p class="formrow"><label class="control-label" for="register_email">用户名称<span
                     style="color:red">*</span></label>
-                <input type="text" class="user_name" placeholder="用户名由数字，字母，中文、（8-32位）组成"></p>
+                <input type="text" class="user_name" placeholder="用户名由数字，字母（6-18位）组成"></p>
             <span class="text-danger span_name" style="color:red"></span>
         </div>
         <div>
@@ -145,8 +145,8 @@
             //用户名
             function user_name(_this) {
                 var user_name = _this.val();
-                var text = '用户名由数字，字母，中文（6-18位）组成';
-                var ret = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z\u4e00-\u9fa5]{6,18}$/;
+                var text = '用户名由数字，字母（6-18位）组成';
+                var ret = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/;
                 if (user_name == '' || !ret.test(user_name)) {
                     $('.span_name').text(text);
                     return false;
@@ -332,6 +332,7 @@
                     type:'post',
                     url:url,
                     data:data,
+                    async:false,
                     dataType:'json',
                     success:function (info) {
                         var face=info.msg;
@@ -351,8 +352,8 @@
                 var fal=false;
                 //用户
                 var user_name=$('.user_name').val();
-                var text = '用户名由数字，字母，中文（6-18位）组成';
-                var ret = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z\u4e00-\u9fa5]{6,18}$/;
+                var text = '用户名由数字，字母（6-18位）组成';
+                var ret = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/;
                 if (user_name == '' || !ret.test(user_name)) {
                     $('.span_name').text(text);
                     fal=false;
@@ -417,6 +418,7 @@
                     type:'post',
                     url:url,
                     data:data,
+                    async:false,
                     dataType: 'json',
                     success:function (info) {
                         var face=info.msg;
