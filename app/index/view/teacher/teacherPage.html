@@ -12,11 +12,13 @@
             <img src="/images/lin.jpg" width="150">
         </div>
         <div class="teachtext">
-            <h3>吴孟林&nbsp;&nbsp;<strong>mysqld</strong></h3>
-            <h4>个人简介</h4>
-            <p>除了php啥也干，专业没的问题，你们看着办，就是</p>
-            <h4>授课风格</h4>
-            <p>花里胡哨</p>
+            <h3 class="lect_name">吴孟林11&nbsp;&nbsp</h3>
+            <h5>所授语言</h5>
+            <p class="cate_name"></p>
+            <h5>个人简介</h5>
+            <p class="lect_resume                         ">除了php啥也干，专业没的问题，你们看着办，就是</p>
+            <h5>授课风格</h5>
+            <p class="lect_style">花里胡哨</p>
         </div>
         <div class="clearh"></div>
     </div>
@@ -25,26 +27,8 @@
 
     <div class="tcourselist">
         <h3 class="righttit" style="padding-left:50px;">在教课程</h3>
-        <ul class="tcourseul">
-            <li>
-                <span class="courseimg tcourseimg"><a href="coursecont.html" target="_blank"><img width="230" src="/images/c8.jpg"></a></span>
-                <span class="tcoursetext">
-	       <h4><a href="coursecont.html" target="_blank" class="teatt">会计从业资格会计基础</a><a class="state">更新中</a></h4>
-	       <p class="teadec">会计从业资格会计基础会计从业资格会计基础会计础会计从业资格会计基础会计从业资格会计基础会计础会计从业资格会计基础会计从业资格会计基础会计础</p>
-	       <p class="courselabel clock">30课时 600分钟<span class="courselabel student">2555人学习</span><span class="courselabel pingjia">评价：<img width="71" height="14" src="/images/evaluate.png" data-bd-imgshare-binded="1"></span></p>
-	   </span>
-                <div style="height:0" class="clearh"></div>
-            </li>
-            <li>
-                <span class="courseimg tcourseimg"><a href="coursecont.html" target="_blank"><img width="230" src="/images/c8.jpg"></a></span>
-                <span class="tcoursetext">
-	       <h4><a href="coursecont.html" target="_blank" class="teatt">会计从业资格会计基础</a><a class="state">更新中</a></h4>
-	       <p class="teadec">会计从业资格会计基础会计从业资格会计基础会计础会计从业资格会计基础会计从业资格会计基础会计础会计从业资格会计基础会计从业资格会计基础会计础</p>
-	       <p class="courselabel clock">30课时 600分钟<span class="courselabel student">2555人学习</span><span class="courselabel pingjia">评价：<img width="71" height="14" src="/images/evaluate.png" data-bd-imgshare-binded="1"></span></p>
-	   </span>
-                <div style="height:0" class="clearh"></div>
-            </li>
-            <div class="clearh"></div>
+        <ul class="tcourseul ul">
+
         </ul>
     </div>
 
@@ -66,11 +50,38 @@
                     url:url,
                     data:{lect_id:id},
                     success:function(res){
-                        console.log(res)
-                        $('.teatt').text(cate_name);
+                        $('.cate_name').html(res.cate_name)
+                        $('.lect_name').html(res.lect_name)
+                        $('.lect_resume').html(res.lect_resume)
+                        $('.lect_style').html(res.lect_style)
                     }
                 })
         })
-        // location.href="http://www.tp6.com/api/lect/teacherPage?lect_id="+lect_id
+
+
+        $(function () {
+            var id=$('#lest_id').val();
+            var url="__APIURL__/api/lect/teachercourse";
+            $.ajax(
+                {
+                    type:"post",
+                    dataType:"json",
+                    url:url,
+                    data:{lect_id:id},
+                    success:function(res){
+                        console.log(res)
+
+                        var html="";
+                        for (var i=0;i<res.length;i++){
+                            html+= '<li> <span class="courseimg tcourseimg"><a href="coursecont.html" target="_self" class="course_image"><img width="230" src="__IMGURL__/uploads/'+res[i].course_image+'"></a></span> <span class="tcoursetext"> <h4><a href="coursecont.html" target="_self" class="teatt course_name">'+res[i].course_name+'</a><a class="state">更新中</a></h4> <p class="teadec course_desc">'+res[i].course_desc+'</p> <p class="courselabel clock">30课时 600分钟<span class="courselabel student">2555人学习</span><span class="courselabel pingjia">评价：<img width="71" height="14" src="/images/evaluate.png" data-bd-imgshare-binded="1"></span></p> </span> <div style="height:0" class="clearh"></div> </li> <div class="clearh"></div>'
+                            // $(".course_name").html(res[i].course_name)
+                            // $(".course_image").html("<img width=\"230\" src=__IMGURL__/uploads/"+res[i].course_image+">")
+                            // $(".course_desc").html(res[i].course_desc)
+                        }
+                        $(".ul").html(html)
+
+                    }
+                })
+        })
 </script>
 {/block}
