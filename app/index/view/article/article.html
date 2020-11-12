@@ -171,21 +171,50 @@
 //                data:{},
                     dataType:"json",
                     success:function(res){
-                        var data=res.data
-                        var div="";
-                        for(var i in data){
-                            div+= "<div class='articlelist HotList' id='HotList'>"+
-                                    "<h3><a class='artlink' href='/index/article/ArtMinute'>"+data[i].message_title+"</a></h3>"+
-                                    "<p></p>"+
-                                    "<p class='artilabel'>"+
-                                    "<span class='ask_label'>"+data[i].message_name+"</span>"+
-                                    "<b class='labtime'>"+data[i].add_time+"</b> "+
-                                    "</p>"+
+                        if(res.error==200){
+                            var data=res.data
+                            var div="";
+                            for(var i in data){
+                                div+= "<div class='articlelist HotList' id='HotList'>"+
+                                        "<h3><a class='artlink' href='/index/article/ArtMinuteHot?id="+data[i].message_id+"'>"+data[i].message_title+"</a></h3>"+
+                                        "<p></p>"+
+                                        "<p class='artilabel'>"+
+                                        "<span class='ask_label'>"+data[i].message_name+"</span>"+
+                                        "<b class='labtime'>"+data[i].add_time+"</b> "+
+                                        "</p>"+
 //                                    "<div class='clearh'></div>"+
-                                    "</div>"
+                                        "</div>"
+                            }
+                            $('.HotList').remove();
+                            $('#articleHot').prepend(div);
+                        }else{
+                            let option = {
+                                hook: {
+                                    initStart: function () {
+                                        // 检查之前老旧实例如果存在则销毁
+                                        if (document.querySelector('#modal-layer-container'))
+                                            ModalLayer.removeAll();
+                                    }
+                                },
+                                popupTime: 0,
+                                type: 'alert',
+                                title: '友情提示',
+                                dragOverflow: true,
+                                content: '<i class="fas fa-check" style="color: deepskyblue"></i>'+res.msg+'!',
+                            };
+                            ModalLayer.alert(option);
+                            var str=0;
+                            var vm=setInterval(function(){
+                                str++;
+                                if(str>=2){
+                                    history.back(-1);
+                                    clearInterval(vm);
+                                }
+                            },300);
+//                    return false;
                         }
-                        $('.HotList').remove();
-                        $('#articleHot').prepend(div);
+                        return false;
+
                     }
                 })
             })
@@ -202,22 +231,50 @@
 //                data:{},
                     dataType:"json",
                     success:function(res){
-                        var data=res.data
-                        var div="";
-
-                        for(var i in data){
-                            div+= "<div class='articlelist activity' id='activity'>"+
-                                    "<h3><a class='artlink' href='/index/article/ArtMinute'>"+data[i].act_title+"</a></h3>"+
-                                    "<p></p>"+
-                                    "<p class='artilabel'>"+
-                                    "<span class='ask_label'>"+data[i].act_content+"</span>"+
-                                    "<b class='labtime'>"+data[i].add_time+"</b> "+
-                                    "</p>"+
-                                    "<div class='clearh'></div>"+
-                                    "</div>"
+                        if(res.error==200){
+                            var data=res.data
+                            var div="";
+                            for(var i in data){
+                                div+= "<div class='articlelist activity' id='activity'>"+
+                                        "<h3><a class='artlink' href='/index/article/ActiMinute?id="+data[i].act_id+"'>"+data[i].act_title+"</a></h3>"+
+                                        "<p></p>"+
+                                        "<p class='artilabel'>"+
+                                        "<span class='ask_label'>"+data[i].act_content+"</span>"+
+                                        "<b class='labtime'>"+data[i].add_time+"</b> "+
+                                        "</p>"+
+                                        "<div class='clearh'></div>"+
+                                        "</div>"
+                            }
+                            $('.activity').remove();
+                            $('#activities').prepend(div);
+                        }else{
+                            let option = {
+                                hook: {
+                                    initStart: function () {
+                                        // 检查之前老旧实例如果存在则销毁
+                                        if (document.querySelector('#modal-layer-container'))
+                                            ModalLayer.removeAll();
+                                    }
+                                },
+                                popupTime: 0,
+                                type: 'alert',
+                                title: '友情提示',
+                                dragOverflow: true,
+                                content: '<i class="fas fa-check" style="color: deepskyblue"></i>'+res.msg+'!',
+                            };
+                            ModalLayer.alert(option);
+                            var str=0;
+                            var vm=setInterval(function(){
+                                str++;
+                                if(str>=2){
+                                    history.back(-1);
+                                    clearInterval(vm);
+                                }
+                            },300);
+//                    return false;
                         }
-                        $('.activity').remove();
-                        $('#activities').prepend(div);
+                        return false;
+
                     }
                 })
             })
@@ -229,23 +286,50 @@
 //                data:{},
                 dataType:"json",
                 success:function(res){
-                    var data=res.data
-                    var div="";
+                    if(res.error==200){
+                        var data=res.data
+                        var div="";
+                        for(var i in data){
+                            div+= "<div class='articlelist artList' id='artList'>"+
+                                    "<h3><a class='artlink' href='/index/article/ArtMinute?id="+data[i].message_id+"'>"+data[i].message_title+"</a></h3>"+
+                                    "<p></p>"+
+                                    "<p class='artilabel'>"+
+                                    "<span class='ask_label'>"+data[i].message_name+"</span>"+
+                                    "<b class='labtime'>"+data[i].add_time+"</b> "+
+                                    "</p>"+
+                                    "<div class='clearh'></div>"+
+                                    "</div>"
+                        }
+                        $('.artList').remove();
+                        $('#articleList').prepend(div);
 
-                    for(var i in data){
-                        div+= "<div class='articlelist artList' id='artList'>"+
-                                "<h3><a class='artlink' href='/index/article/ArtMinute'>"+data[i].message_title+"</a></h3>"+
-                                "<p></p>"+
-                                "<p class='artilabel'>"+
-                                "<span class='ask_label'>"+data[i].message_name+"</span>"+
-                                "<b class='labtime'>"+data[i].add_time+"</b> "+
-                                "</p>"+
-                                "<div class='clearh'></div>"+
-                                "</div>"
+                    }else{
+                        let option = {
+                            hook: {
+                                initStart: function () {
+                                    // 检查之前老旧实例如果存在则销毁
+                                    if (document.querySelector('#modal-layer-container'))
+                                        ModalLayer.removeAll();
+                                }
+                            },
+                            popupTime: 0,
+                            type: 'alert',
+                            title: '友情提示',
+                            dragOverflow: true,
+                            content: '<i class="fas fa-check" style="color: deepskyblue"></i>'+res.msg+'!',
+                        };
+                        ModalLayer.alert(option);
+                        var str=0;
+                        var vm=setInterval(function(){
+                            str++;
+                            if(str>=2){
+                                history.back(-1);
+                                clearInterval(vm);
+                            }
+                        },300);
+//                    return false;
                     }
-                    $('.artList').remove();
-                    $('#articleList').prepend(div);
-
+                    return false;
                 }
             })
             //课程最新
@@ -255,17 +339,44 @@
 //                data:{},
                 dataType:"json",
                 success:function(res){
-                    var data=res.data
-                    var div="";
-
-                    for(var i in data){
-                        div+= '<div class="teapic courseNew">'+
-                              '<a href="#"  target="_blank"><img src="/images/c1.jpg" height="60" title="'+data[i].course_name+'"></a>'+
-                              '<h3 class="courh3"><a href="#" class="ask_link" target="_blank">'+data[i].course_name+'</a></h3>'+
-                                '</div>'
+                    if(res.error==200){
+                        var data=res.data
+                        var div="";
+                        for(var i in data){
+                            div+= '<div class="teapic courseNew">'+
+                                    '<a href="#"  target="_blank"><img src="/images/c1.jpg" height="60" title="'+data[i].course_name+'"></a>'+
+                                    '<h3 class="courh3"><a href="#" class="ask_link" target="_blank">'+data[i].course_name+'</a></h3>'+
+                                    '</div>'
+                        }
+                        $('.courseNew').remove();
+                        $('#courseNew').prepend(div);
+                    }else{
+                        let option = {
+                            hook: {
+                                initStart: function () {
+                                    // 检查之前老旧实例如果存在则销毁
+                                    if (document.querySelector('#modal-layer-container'))
+                                        ModalLayer.removeAll();
+                                }
+                            },
+                            popupTime: 0,
+                            type: 'alert',
+                            title: '友情提示',
+                            dragOverflow: true,
+                            content: '<i class="fas fa-check" style="color: deepskyblue"></i>'+res.msg+'!',
+                        };
+                        ModalLayer.alert(option);
+                        var str=0;
+                        var vm=setInterval(function(){
+                            str++;
+                            if(str>=2){
+                                history.back(-1);
+                                clearInterval(vm);
+                            }
+                        },300);
+//                    return false;
                     }
-                    $('.courseNew').remove();
-                    $('#courseNew').prepend(div);
+                    return false;
 
                 }
             })

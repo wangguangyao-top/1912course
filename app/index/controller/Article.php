@@ -11,4 +11,10 @@ class Article
     public function ArtMinute(){
         return view('ArtMinute');
     }
+    public function ArtMinuteHot(){
+        return view('ArtMinuteHot');
+    }
+    public function ActiMinute(){
+        return view('ActiMinute');
+    }
 }
