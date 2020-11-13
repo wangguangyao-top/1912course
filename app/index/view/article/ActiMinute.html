@@ -1,0 +1,131 @@
+{extend name="common/common"}
+{block name="body"}
+<link rel="stylesheet" href="/css/article.css">
+<script src="/js/jquery-1.8.0.min.js"></script>
+<script src="/js/mine.js"></script>
+<!-- InstanceEndEditable -->
+<!-- InstanceBeginEditable name="head" -->
+<!-- InstanceEndEditable -->
+<!-- InstanceBeginEditable name="EditRegion1" -->
+<div class="coursecont">
+    <div class="coursepic">
+        <h3 class="righttit">全部资讯</h3>
+        <div class="clearh"></div>
+    <span class="bread">
+    <a class="ask_link" href="/index/article">精彩活动</a>&nbsp;/&nbsp;
+        <!--<a class="ask_link" href="articlelist.html">热门资讯</a>&nbsp;/&nbsp;-->
+
+    </span><input type="hidden" value="{$_GET['id']}" id="min_id">
+
+    </div>
+    <div class="clearh"></div>
+    <div class="coursetext" id="ActMinute_div">
+        <!--内容-->
+
+	<span class="pagejump">
+    	<a class="pagebtn lpage" title="上一篇" href="/index/article/ActiMinute?id={$_GET['id']-1}">上一篇</a>
+        <a class="pagebtn npage" title="下一篇" href="/index/article/ActiMinute?id={$_GET['id']+1}">下一篇</a>
+    </span>
+
+    </div>
+
+    <!--<div class="courightext">-->
+    <!--<div class="ctext">-->
+    <!--<div class="cr1">-->
+    <!--<h3 class="righttit">热门资讯</h3>-->
+    <!--<div class="gonggao">-->
+    <!--<ul class="hotask">-->
+    <!--<li><a class="ask_link" href="#"><strong>●</strong>请问女子监狱人民狱人民警察?</a></li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <div class="ctext">
+        <div class="cr1">
+            <h3 class="righttit">推荐课程</h3>
+            <div class="teacher">
+                <div class="teapic">
+                    <a href="#"  target="_blank"><img src="/images/c1.jpg" height="60" title="财经法规与财经职业道德"></a>
+                    <h3 class="courh3"><a href="#" class="ask_link" target="_blank">财经法规与财经职业道德</a></h3>
+                </div>
+                <div class="clearh"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="clearh"></div>
+
+<!-- InstanceEndEditable -->
+
+
+<div class="clearh"></div>
+<script>
+    $(document).ready(function(){
+
+        var min_id=$('#min_id').val();
+//            alert(min_id)
+        $.ajax({
+            url:"http://www.tp6.com/api/article/actiMinute",
+            type:"post",
+            data:{'min_id':min_id},
+            dataType:"json",
+            success:function(res){
+                if(res.error==200){
+                    var data=res.data
+                    var div="";
+                    var str="";
+
+                    div+= "<div  class='ActMinute'>"+
+                            '<span class="articletitle">'+
+                            '<h2>'+data.act_title+'</h2>'+
+                            '<p class="gray">'+data.add_time+'</p>'+
+                            '</span>'+
+                            '<p class="coutex" >'+data.act_content+'</p>'+
+                            '<div class="clearh" style="height:30px;"></div>'+
+                            "</div>"
+
+                    str+="<b class='title'>"+data.act_title+"</b>"
+                    $('.title').remove();
+                    $('.bread').append(str);
+                    $('.ActMinute').remove();
+                    $('#ActMinute_div').prepend(div);
+                }else{
+                    let option = {
+                        hook: {
+                            initStart: function () {
+                                // 检查之前老旧实例如果存在则销毁
+                                if (document.querySelector('#modal-layer-container'))
+                                    ModalLayer.removeAll();
+                            }
+                        },
+                        popupTime: 0,
+                        type: 'alert',
+                        title: '友情提示',
+                        dragOverflow: true,
+                        content: '<i class="fas fa-check" style="color: deepskyblue"></i>已经没有更多了!',
+                    };
+                    ModalLayer.alert(option);
+                    var str=0;
+                    var vm=setInterval(function(){
+                        str++;
+                        if(str>=2){
+                            history.back(-1);
+                            clearInterval(vm);
+                        }
+                    },300);
+//                    return false;
+                }
+                return false;
+            }
+        })
+
+
+
+    })
+</script>
+{/block}

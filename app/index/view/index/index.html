@@ -324,20 +324,21 @@
             <div class="clearh" style="height:20px;"></div>
 
             <div>
+
                 <ul id="myTab3">
                     {volist name="data" id="v"}
-                    <li class="current" onClick="nTabs(this,0);">{$v.cate_name}</li>
+                    <li class="{$v.cate_id==1?'':'current2'}" data-id="{$v.cate_id}" onClick="nTabs(this,0);" id="cli">{$v.cate_name}</li>
                     {/volist}
                 </ul>
 
                 <div class="clearh"></div>
                 <div>
                     <ul class="courseul" id="myTab3_Content0" style="display: block;">
-                        {volist name="info" id="vv"}
-                        <li>
-                            <div class="courselist">
-                                <img width="263" style="border-radius:3px 3px 0 0;" src="http://www.tp7.com/uploads/{$vv.course_image}" >
-                                <p class="courTit">{$vv.course_name}</p>
+                        {foreach $info as $k=>$vv}
+                        <li class="one" data-one="{$k+1}">
+                            <div class="courselist" id="ima">
+                                <a href="/index/course/coursePage?cate_id='+cate_id+'"><img width="263" style="border-radius:3px 3px 0 0;" src="http://www.tp7.com/uploads/{$vv.course_image}" ></a>
+                                <a href="/index/course/coursePage?cate_id='+cate_id+'"><p class="courTit">{$vv.course_name}</p></a>
                                 <div class="gray">
                                     <span>1小时前更新</span>
                                     <span class="sp1">1234643人学习</span>
@@ -345,130 +346,78 @@
                                 </div>
                             </div>
                         </li>
-                        {/volist}
+                        {/foreach}
                         <div class="clearh"></div>
+
                     </ul>
                 </div>
-                <div>
-                    <ul class="courseul" id="myTab3_Content1" style="display: none;">
-                        <li>
-                            <div class="courselist">
-                                <img width="263" style="border-radius:3px 3px 0 0;" src="/images/c1.jpg" >
-                                <p class="courTit">HTTP下载课程</p>
-                                <div class="gray">
-                                    <span>1小时前更新</span>
-                                    <span class="sp1">1255555人学习</span>
-                                    <div style="clear:both"></div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="courselist">
-                                <img width="263" style="border-radius:3px 3px 0 0;" src="/images/c1.jpg" >
-                                <p class="courTit">HTTP下载课程</p>
-                                <div class="gray">
-                                    <span>1小时前更新</span>
-                                    <span class="sp1">1255555人学习</span>
-                                    <div style="clear:both"></div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="courselist">
-                                <img width="263" style="border-radius:3px 3px 0 0;" src="/images/c1.jpg" >
-                                <p class="courTit">HTTP下载课程</p>
-                                <div class="gray">
-                                    <span>1小时前更新</span>
-                                    <span class="sp1">1255555人学习</span>
-                                    <div style="clear:both"></div>
-                                </div>
-                            </div>
-                        </li>
-                        <div class="clearh"></div>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="courseul" id="myTab3_Content2" style="display: none;">
-                        <li>
-                            <div class="courselist">
-                                <img width="263" style="border-radius:3px 3px 0 0;" src="/images/c1.jpg" >
-                                <p class="courTit">HTTP下载课程</p>
-                                <div class="gray">
-                                    <span>1小时前更新</span>
-                                    <span class="sp1">1255555人学习</span>
-                                    <div style="clear:both"></div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="courselist">
-                                <img width="263" style="border-radius:3px 3px 0 0;" src="/images/c1.jpg" >
-                                <p class="courTit">HTTP下载课程</p>
-                                <div class="gray">
-                                    <span>1小时前更新</span>
-                                    <span class="sp1">1255555人学习</span>
-                                    <div style="clear:both"></div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="courselist">
-                                <img width="263" style="border-radius:3px 3px 0 0;" src="/images/c1.jpg" >
-                                <p class="courTit">HTTP下载课程</p>
-                                <div class="gray">
-                                    <span>1小时前更新</span>
-                                    <span class="sp1">1255555人学习</span>
-                                    <div style="clear:both"></div>
-                                </div>
-                            </div>
-                        </li>
-                        <div class="clearh"></div>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="courseul" id="myTab3_Content3" style="display: none;">
-                        <li>
-                            <div class="courselist">
-                                <img width="263" style="border-radius:3px 3px 0 0;" src="/images/c1.jpg" >
-                                <p class="courTit">HTTP下载课程</p>
-                                <div class="gray">
-                                    <span>1小时前更新</span>
-                                    <span class="sp1">1255555人学习</span>
-                                    <div style="clear:both"></div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="courselist">
-                                <img width="263" style="border-radius:3px 3px 0 0;" src="/images/c1.jpg" >
-                                <p class="courTit">HTTP下载课程</p>
-                                <div class="gray">
-                                    <span>1小时前更新</span>
-                                    <span class="sp1">1255555人学习</span>
-                                    <div style="clear:both"></div>
-                                </div>
-                            </div>
-                        </li>
-                        <div class="clearh"></div>
-                    </ul>
-                </div>
+
             </div>
 
 
             <div class="line no"></div>
-
-
         </div>
-        <span class="morecourse"><a href="courselist.html" class="btnlink">更多课程</a></span>
-
+        <span class="morecourse"><button class="btnlink" id="but">更多课程</button></span>
     </div>
     <script>
         $(document).ready(function(){
             $("#myTab3").children('li').removeClass("current");
+
         })
-        $(document).on("click",".current",function(){
-            var course_curr=$(this).text();
-            console.log(course_curr);
+        //首页课程列表
+        $(document).on("click","#cli",function(){
+            $(this).siblings().removeClass('current');
+            $(this).siblings().addClass('current2');
+            var number=$(this).parents('.crdiv').find('.one:last').data('one','0')?$(this).parents('.crdiv').find('.one:last').data('one'):'0';
+            $(this).addClass('current');
+            var cate_id=$(this).data('id');
+            var url='__APIURL__/api/category/cate';
+            var data={cate_id:cate_id,number:number}
+            $.ajax({
+                type:'post',
+                url:url,
+                data:data,
+                dataType:'json',
+                success:function (info) {
+                    var str="";
+                    for( var i in info){
+                        var noe=1*i+1*1;
+//                        noe=1*noe+number*1;
+
+                        str+=  '<li class="one" data-one="'+noe+'"> <div class="courselist" id="ima"> <a href="/index/course/coursePage?cate_id='+cate_id+'"><img width="263" style="border-radius:3px 3px 0 0;" src="http://www.tp7.com/uploads/'+info[i].course_image+'" ></a> <a href="/index/course/coursePage?cate_id='+cate_id+'"><p class="courTit">'+info[i].course_name+'</p></a> <div class="gray"> <span>1小时前更新</span> <span class="sp1">1234643人学习</span> <div style="clear:both"></div> </div> </div> </li>'
+                    }
+                    str+= '<div class="clearh"></div>';
+                    $('.courseul').text('');
+                    $('.courseul').append(str);
+                }
+            })
+        })
+        //加载更多
+        $(document).on("click","#but",function(){
+            var number=$(this).parents('.crdiv').find('.one:last').data('one');
+            var cate_id=$('.current').data('id');
+            var url='__APIURL__/api/category/add';
+            var data={cate_id:cate_id,number:number}
+            $.ajax({
+                type:'post',
+                url:url,
+                data:data,
+                dataType:'json',
+                success:function (res) {
+                    if(res==1000){
+                        alert('我也是有底线的')
+                    }else{
+                        var str="";
+                        for( var a in res){
+                            var noe=1*a+1*1;
+                            noe=1*noe+number*1;
+                            str+=  '<li class="one" data-one="'+noe+'"> <div class="courselist" id="ima"> <a href="/index/course/coursePage?cate_id='+cate_id+'"><img width="263" style="border-radius:3px 3px 0 0;" src="http://www.tp7.com/uploads/'+res[a].course_image+'" ></a> <a href="/index/course/coursePage?cate_id='+cate_id+'"><p class="courTit">'+res[a].course_name+'</p></a> <div class="gray"> <span>1小时前更新</span> <span class="sp1">1234643人学习</span> <div style="clear:both"></div> </div> </div> </li>'
+                        }
+                        str+= '<div class="clearh"></div>';
+                        $('.courseul').append(str);
+                    }
+                }
+            })
         })
     </script>
     {/block}
