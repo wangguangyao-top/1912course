@@ -3,6 +3,8 @@
 
 <link rel="stylesheet" href="/css/course.css"/>
 <link rel="stylesheet" href="/css/tab.css" media="screen">
+
+
 <script src="/js/jquery-1.8.0.min.js"></script>
 <script src="/js/jquery.tabs.js"></script>
 <script src="/js/mine.js"></script>
@@ -25,42 +27,81 @@
             <li class="curr" style="border-radius:3px 3px 0 0;background:#fb5e55;"><h3 style="color:#fff;"><a href="#" class="whitea">题库分类</a></h3>
             <li>
                 <h4>题库分类</h4>
-                <ul class="sortul cla_name" name="cla_name">
-
-                    <li class="course_curr2"><a href="#">kk</a></li>
-
+                <input type="hidden" name="cla_id" value="{$_GET['cla_id']}">
+                <ul class="sortul" name="cla_name">
+                    {foreach $cla as $k=>$v}
+                    <li class="course_curr2"><a href="/index/bank/secondary?cla_id={$v.cla_id}">{$v.cla_name}</a></li>
+                    {/foreach}
                 </ul>
                 <div class="clearh"></div>
             </li>
         </ul>
-        <!--<div style="height:20px;border-radius:0 0 5px 5px; background:#fff;box-shadow:0 2px 4px rgba(0, 0, 0, 0.1)"></div>-->
+        <div style="height:20px;border-radius:0 0 5px 5px; background:#fff;box-shadow:0 2px 4px rgba(0, 0, 0, 0.1)"></div>
     </div>
     <div class="courseright">
-        <div class="clearh"></div>
-        <ul class="courseulr">
-            <li>
-                <div class="courselist">
-                    <a href="coursecont.html" target="_blank"><img style="border-radius:3px 3px 0 0;" width="240" src="/images/c1.jpg" title="会计基础"></a>
-                    <p class="courTit"><a href="coursecont.html" target="_blank">403是什么错？</a></p>
 
-                </div>
-            </li>
-            <li>
-                <div class="courselist">
-                    <a href="coursecont.html" target="_blank"><img style="border-radius:3px 3px 0 0;" width="240" src="/images/c2.jpg" title="会计基础"></a>
-                    <p class="courTit"><a href="coursecont.html" target="_blank">永久重定向是？</a></p>
+        <dl class="mulu" id="mulu">
 
-                </div>
-            </li>
+        </dl>
+        <!--<table border="1px solid red" id="table" bgcolor="#ffe4c4">-->
+            <!--<tr>-->
+                <!--<td>标题</td>-->
+                <!--<td>题类型</td>-->
+                <!--<td>题分类</td>-->
+                <!--<td>题内容</td>-->
+            <!--</tr>-->
+            <!--<tr class="bank">-->
 
+            <!--</tr>-->
+        <!--</table>-->
+        <div class="clearh" style="padding-top: 200px;">
 
-        </ul>
+        </div>
+
     </div>
-    <div class="clearh"></div>
+</div>
+<div class="clearh"></div>
 
-    <!-- InstanceEndEditable -->
+<!-- InstanceEndEditable -->
 
 
-    <div class="clearh"></div>
-    {/block}
+<div class="clearh"></div>
+<script>
+    $(document).ready(function(){
+        $(".sortul").children('li').removeClass("course_curr");
+        var cla_id=$("input[name='cla_id']").val();
+        $.ajax({
+            type:"post",
+            dataType:"json",
+            data:{cla_id:cla_id},
+            url:"__APIURL__/api/bank/bank",
+            success:function(res){
+                var kk=res.bank
+                var html="";
+                console.log(res.bank)
+                for (var i=0;i<res.bank.length;i++){
+                    var bank_title=kk[i].bank_title
+                    var bank_type=kk[i].bank_type
+                    var cla_name=kk[i].cla_name
+                    var bank_content=kk[i].bank_content
+//                    html+="<tr>"+
+//                            '<td>'+bank_title+'</td>'+
+//                            '<td>'+bank_type+'</td>'+
+//                            '<td>'+cla_name+'</td>'+
+//                            '<td>'+bank_content+'</td>'+
+//                            "</tr>"
+                    html+='<dt><a href="#" class="graylink">'+bank_title+'&nbsp;&nbsp;</a><span>'+cla_name+'</span></dt> <dd>'+bank_content+'</dd>'
+                }
+                $("#mulu").append(html)
 
+            }
+        })
+        return false;
+    })
+
+    $(document).on("click",".course_curr2",function(){
+        var course_curr=$(this).text();
+        console.log(course_curr);
+    })
+</script>
+{/block}

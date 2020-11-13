@@ -1,9 +1,39 @@
 <!doctype html>
 <html>
+<!--图标库-->
+<link rel="stylesheet" href="/asset/css/all.min.css">
+
+<!--图标库-->
+<script src="/asset/js/all.min.js"></script>
+
+<!--核心样式-->
+<link rel="stylesheet" href="/asset/css/modallayer.min.css">
+
+<!--插件-->
+<script src="/asset/js/modallayer-ie.min.js"></script>
+<style>
+    #test-button-container {
+        position: absolute;
+        top: 50%;
+        left: 0px;
+        right: 0px;
+        width: 145px;
+        margin: 0px auto;
+        text-align: center;
+        transform: translateY(-50%);
+    }
+
+    #test-button-container button {
+        width: 145px;
+        margin: 5px 0px;
+        padding: 10px 0px;
+    }
+</style>
 <head>
     <meta charset="utf-8">
     <title>谋刻职业教育在线测评与学习平台</title>
     <!--课程选项卡-->
+    <!--<link rel="stylesheet" href="/layui/css/layui.css">-->
     <script type="text/javascript">
         function nTabs(thisObj,Num){
             if(thisObj.className == "current")return;
@@ -21,12 +51,24 @@
                 }
             }
         }
+
+//        layui.use('element', function(){
+//            var element = layui.element;
+//
+//            layui.use('layer', function(){
+//                var layer = layui.layer;
+//                return false;
+////      layer.msg('hello');
+//            });
+//        });
+
     </script>
 
 
 </head>
 
 <body>
+
 
 <div class="head" id="fixed">
     <div class="nav">

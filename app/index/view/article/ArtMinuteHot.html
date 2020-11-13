@@ -1,18 +1,18 @@
 {extend name="common/common"}
 {block name="body"}
-    <link rel="stylesheet" href="/css/article.css">
-    <script src="/js/jquery-1.8.0.min.js"></script>
-    <script src="/js/mine.js"></script>
-    <!-- InstanceEndEditable -->
-    <!-- InstanceBeginEditable name="head" -->
-    <!-- InstanceEndEditable -->
+<link rel="stylesheet" href="/css/article.css">
+<script src="/js/jquery-1.8.0.min.js"></script>
+<script src="/js/mine.js"></script>
+<!-- InstanceEndEditable -->
+<!-- InstanceBeginEditable name="head" -->
+<!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="EditRegion1" -->
 <div class="coursecont">
     <div class="coursepic">
         <h3 class="righttit">全部资讯</h3>
         <div class="clearh"></div>
     <span class="bread">
-    <a class="ask_link" href="/index/article">全部资讯</a>&nbsp;/&nbsp;
+    <a class="ask_link" href="/index/article">热门资讯</a>&nbsp;/&nbsp;
         <!--<a class="ask_link" href="articlelist.html">热门资讯</a>&nbsp;/&nbsp;-->
 
     </span><input type="hidden" value="{$_GET['id']}" id="min_id">
@@ -20,26 +20,26 @@
     </div>
     <div class="clearh"></div>
     <div class="coursetext" id="ArtMinute_div">
-    <!--内容-->
+        <!--内容-->
 
 	<span class="pagejump">
-    	<a class="pagebtn lpage" title="上一篇" href="/index/article/ArtMinute?id={$_GET['id']-1}">上一篇</a>
-        <a class="pagebtn npage" title="下一篇" href="/index/article/ArtMinute?id={$_GET['id']+1}">下一篇</a>
+    	<a class="pagebtn lpage" title="上一篇" href="/index/article/ArtMinuteHot?id={$_GET['id']-1}">上一篇</a>
+        <a class="pagebtn npage" title="下一篇" href="/index/article/ArtMinuteHot?id={$_GET['id']+1}">下一篇</a>
     </span>
 
     </div>
 
-    <div class="courightext">
-        <div class="ctext">
-            <div class="cr1">
-                <h3 class="righttit">热门资讯</h3>
-                <div class="gonggao">
-                    <ul class="hotask">
-                        <li><a class="ask_link" href="#"><strong>●</strong>请问女子监狱人民狱人民警察?</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <!--<div class="courightext">-->
+        <!--<div class="ctext">-->
+            <!--<div class="cr1">-->
+                <!--<h3 class="righttit">热门资讯</h3>-->
+                <!--<div class="gonggao">-->
+                    <!--<ul class="hotask">-->
+                        <!--<li><a class="ask_link" href="#"><strong>●</strong>请问女子监狱人民狱人民警察?</a></li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
 
         <div class="ctext">
             <div class="cr1">
@@ -60,17 +60,17 @@
 
     <div class="clearh"></div>
 
-<!-- InstanceEndEditable -->
+    <!-- InstanceEndEditable -->
 
 
-<div class="clearh"></div>
+    <div class="clearh"></div>
     <script>
         $(document).ready(function(){
 
             var min_id=$('#min_id').val();
 //            alert(min_id)
             $.ajax({
-                url:"http://www.tp6.com/api/article/artDeta",
+                url:"http://www.tp6.com/api/article/artDetaHot",
                 type:"post",
                 data:{'min_id':min_id},
                 dataType:"json",
@@ -88,6 +88,7 @@
                                 '<p class="coutex" >'+data.message_name+'</p>'+
                                 '<div class="clearh" style="height:30px;"></div>'+
                                 "</div>"
+
                         str+="<b class='title'>"+data.message_title+"</b>"
                         $('.title').remove();
                         $('.bread').append(str);
@@ -109,14 +110,14 @@
                             content: '<i class="fas fa-check" style="color: deepskyblue"></i>已经没有更多了!',
                         };
                         ModalLayer.alert(option);
-                            var str=0;
-                            var vm=setInterval(function(){
-                                str++;
-                                if(str>=2){
-                                    history.back(-1);
-                                    clearInterval(vm);
-                                }
-                            },300);
+                        var str=0;
+                        var vm=setInterval(function(){
+                            str++;
+                            if(str>=2){
+                                history.back(-1);
+                                clearInterval(vm);
+                            }
+                        },300);
 //                    return false;
                     }
                     return false;
