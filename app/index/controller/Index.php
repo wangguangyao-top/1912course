@@ -26,4 +26,5 @@ class Index extends Common
         $info = json_decode($info,true);
         return $info;
     }
+
 }
