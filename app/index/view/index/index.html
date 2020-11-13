@@ -334,8 +334,8 @@
                 <div class="clearh"></div>
                 <div>
                     <ul class="courseul" id="myTab3_Content0" style="display: block;">
-                        {volist name="info" id="vv"}
-                        <li>
+                        {foreach $info as $k=>$vv}
+                        <li class="one" data-one="{$k+1}">
                             <div class="courselist" id="ima">
                                 <a href="/index/course/coursePage?cate_id='+cate_id+'"><img width="263" style="border-radius:3px 3px 0 0;" src="http://www.tp7.com/uploads/{$vv.course_image}" ></a>
                                 <a href="/index/course/coursePage?cate_id='+cate_id+'"><p class="courTit">{$vv.course_name}</p></a>
@@ -346,7 +346,7 @@
                                 </div>
                             </div>
                         </li>
-                        {/volist}
+                        {/foreach}
                         <div class="clearh"></div>
 
                     </ul>
@@ -356,11 +356,8 @@
 
 
             <div class="line no"></div>
-
-
         </div>
-        <span class="morecourse"><button data-tt="{$v.cate_id}" class="btnlink" id="but">更多课程</button></span>
-
+        <span class="morecourse"><button class="btnlink" id="but">更多课程</button></span>
     </div>
     <script>
         $(document).ready(function(){
@@ -371,10 +368,11 @@
         $(document).on("click","#cli",function(){
             $(this).siblings().removeClass('current');
             $(this).siblings().addClass('current2');
+            var number=$(this).parents('.crdiv').find('.one:last').data('one','0')?$(this).parents('.crdiv').find('.one:last').data('one'):'0';
             $(this).addClass('current');
             var cate_id=$(this).data('id');
             var url='__APIURL__/api/category/cate';
-            var data={cate_id:cate_id}
+            var data={cate_id:cate_id,number:number}
             $.ajax({
                 type:'post',
                 url:url,
@@ -383,34 +381,41 @@
                 success:function (info) {
                     var str="";
                     for( var i in info){
-                        str+=  '<li> <div class="courselist" id="ima"> <a href="/index/course/coursePage?cate_id='+cate_id+'"><img width="263" style="border-radius:3px 3px 0 0;" src="http://www.tp7.com/uploads/'+info[i].course_image+'" ></a> <a href="/index/course/coursePage?cate_id='+cate_id+'"><p class="courTit">'+info[i].course_name+'</p></a> <div class="gray"> <span>1小时前更新</span> <span class="sp1">1234643人学习</span> <div style="clear:both"></div> </div> </div> </li>'
+                        var noe=1*i+1*1;
+//                        noe=1*noe+number*1;
+
+                        str+=  '<li class="one" data-one="'+noe+'"> <div class="courselist" id="ima"> <a href="/index/course/coursePage?cate_id='+cate_id+'"><img width="263" style="border-radius:3px 3px 0 0;" src="http://www.tp7.com/uploads/'+info[i].course_image+'" ></a> <a href="/index/course/coursePage?cate_id='+cate_id+'"><p class="courTit">'+info[i].course_name+'</p></a> <div class="gray"> <span>1小时前更新</span> <span class="sp1">1234643人学习</span> <div style="clear:both"></div> </div> </div> </li>'
                     }
                     str+= '<div class="clearh"></div>';
                     $('.courseul').text('');
                     $('.courseul').append(str);
-
-
                 }
             })
         })
         //加载更多
         $(document).on("click","#but",function(){
-            var cate_id=$(this).data('tt');
+            var number=$(this).parents('.crdiv').find('.one:last').data('one');
+            var cate_id=$('.current').data('id');
             var url='__APIURL__/api/category/add';
-            var data={cate_id:cate_id}
+            var data={cate_id:cate_id,number:number}
             $.ajax({
                 type:'post',
                 url:url,
                 data:data,
                 dataType:'json',
                 success:function (res) {
-                    var str="";
-                    for( var a in res){
-                        str+=  '<li> <div class="courselist" id="ima"> <a href="/index/course/coursePage?cate_id='+cate_id+'"><img width="263" style="border-radius:3px 3px 0 0;" src="http://www.tp7.com/uploads/'+res[a].course_image+'" ></a> <a href="/index/course/coursePage?cate_id='+cate_id+'"><p class="courTit">'+res[a].course_name+'</p></a> <div class="gray"> <span>1小时前更新</span> <span class="sp1">1234643人学习</span> <div style="clear:both"></div> </div> </div> </li>'
+                    if(res==1000){
+                        alert('我也是有底线的')
+                    }else{
+                        var str="";
+                        for( var a in res){
+                            var noe=1*a+1*1;
+                            noe=1*noe+number*1;
+                            str+=  '<li class="one" data-one="'+noe+'"> <div class="courselist" id="ima"> <a href="/index/course/coursePage?cate_id='+cate_id+'"><img width="263" style="border-radius:3px 3px 0 0;" src="http://www.tp7.com/uploads/'+res[a].course_image+'" ></a> <a href="/index/course/coursePage?cate_id='+cate_id+'"><p class="courTit">'+res[a].course_name+'</p></a> <div class="gray"> <span>1小时前更新</span> <span class="sp1">1234643人学习</span> <div style="clear:both"></div> </div> </div> </li>'
+                        }
+                        str+= '<div class="clearh"></div>';
+                        $('.courseul').append(str);
                     }
-                    str+= '<div class="clearh"></div>';
-                    $('.courseul').append(str);
-
                 }
             })
         })
