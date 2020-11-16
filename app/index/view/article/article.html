@@ -206,12 +206,13 @@
                             $('#articleHot_p').prepend(pagi);
                             var data=data2.slice(offset,offset+pagelino);
                             for(var i in data){
+                                var myDate = new Date(parseInt(data[i].add_time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
                                 div+= "<div class='articlelist HotList' id='HotList'>"+
                                         "<h3><a class='artlink' href='/index/article/ArtMinuteHot?id="+data[i].message_id+"'>"+data[i].message_title+"</a></h3>"+
                                         "<p></p>"+
                                         "<p class='artilabel'>"+
                                         "<span class='ask_label'>"+data[i].message_name+"</span>"+
-                                        "<b class='labtime'>"+data[i].add_time+"</b> "+
+                                        "<b class='labtime'>"+myDate+"</b> "+
                                         "</p>"+
 //                                    "<div class='clearh'></div>"+
                                         "</div>"
@@ -285,12 +286,13 @@
                             $('#activities_p').prepend(pagi);
                             var data=data2.slice(offset,offset+pagelino);
                             for(var i in data){
+                                var myDate = new Date(parseInt(data[i].add_time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
                                 div+= "<div class='articlelist activity' id='activity'>"+
                                         "<h3><a class='artlink' href='/index/article/ActiMinute?id="+data[i].act_id+"'>"+data[i].act_title+"</a></h3>"+
                                         "<p></p>"+
                                         "<p class='artilabel'>"+
                                         "<span class='ask_label'>"+data[i].act_content+"</span>"+
-                                        "<b class='labtime'>"+data[i].add_time+"</b> "+
+                                        "<b class='labtime'>"+myDate+"</b> "+
                                         "</p>"+
                                         "<div class='clearh'></div>"+
                                         "</div>"
@@ -362,12 +364,14 @@
                         var data2=data.slice(offset,offset+pagelino);
 
                         for(var i in data2){
+                            var myDate = new Date(parseInt(data2[i].add_time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
+//                            console.log(myDate);
                             div+= "<div class='articlelist artList' id='artList'>"+
                                     "<h3><a class='artlink' href='/index/article/ArtMinute?id="+data2[i].message_id+"'>"+data2[i].message_title+"</a></h3>"+
                                     "<p></p>"+
                                     "<p class='artilabel'>"+
                                     "<span class='ask_label'>"+data2[i].message_name+"</span>"+
-                                    "<b class='labtime'>"+data2[i].add_time+"</b> "+
+                                    "<b class='labtime'>"+myDate+"</b> "+
                                     "</p>"+
                                     "<div class='clearh'></div>"+
                                     "</div>"
