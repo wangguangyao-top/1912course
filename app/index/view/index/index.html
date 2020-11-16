@@ -378,6 +378,7 @@
                 url:url,
                 data:data,
                 dataType:'json',
+                async: false,
                 success:function (info) {
                     var str="";
                     for( var i in info){
@@ -403,6 +404,7 @@
                 url:url,
                 data:data,
                 dataType:'json',
+                async: false,
                 success:function (res) {
                     if(res==1000){
                         alert('我也是有底线的')
