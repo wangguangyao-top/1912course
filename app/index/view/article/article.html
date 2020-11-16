@@ -50,7 +50,7 @@
         <!--</div>-->
 
 
-        <div class="clearh" style="height:20px;">
+        <div class="clearh" style="height:20px;"></div>
         <span class="pagejump" id="articleList_p">
             <!--<p class="userpager-list  articleList_p">-->
                 <!--<a href="#" class="page-number">首页</a>-->
@@ -80,18 +80,18 @@
 
 
         <div class="clearh" style="height:20px;"></div>
-        <span class="pagejump">
-            <p class="userpager-list">
-                <a href="#" class="page-number">首页</a>
-                <a href="#" class="page-number">上一页</a>
-                <a href="#" class="page-number">1</a>
-                <a href="#" class="page-number pageractive">2</a>
-                <a href="#" class="page-number">3</a>
-                <a href="#" class="page-number">...</a>
-                <a href="#" class="page-number">10</a>
-                <a href="#" class="page-number">下一页</a>
-                <a href="#" class="page-number">末页</a>
-            </p>
+        <span class="pagejump" id="articleHot_p">
+            <!--<p class="userpager-list">-->
+                <!--<a href="#" class="page-number">首页</a>-->
+                <!--<a href="#" class="page-number">上一页</a>-->
+                <!--<a href="#" class="page-number">1</a>-->
+                <!--<a href="#" class="page-number pageractive">2</a>-->
+                <!--<a href="#" class="page-number">3</a>-->
+                <!--<a href="#" class="page-number">...</a>-->
+                <!--<a href="#" class="page-number">10</a>-->
+                <!--<a href="#" class="page-number">下一页</a>-->
+                <!--<a href="#" class="page-number">末页</a>-->
+            <!--</p>-->
         </span>
         <div class="clearh" style="height:10px;"></div>
     </div>
@@ -109,7 +109,7 @@
 
 
         <div class="clearh" style="height:20px;"></div>
-        <span class="pagejump">
+        <span class="pagejump" id="activities_p">
             <!--<p class="userpager-list">-->
                 <!--<a href="#" class="page-number">首页</a>-->
                 <!--<a href="#" class="page-number">上一页</a>-->
@@ -185,8 +185,26 @@
                     dataType:"json",
                     success:function(res){
                         if(res.error==200){
-                            var data=res.data
+                            var data2=res.data
                             var div="";
+                            //总条数
+                            var count=data2.length;
+//                        每页显示条数
+                            var pagelino=3;
+                            //当前页码
+                            var cpage=$('#page').val();
+//                        总页数
+                            var $zongpage=Math.ceil(count/pagelino);
+                            // 计算分页起始值
+                            var offset=(cpage-1)*pagelino;
+                            var pagi="";
+                            for(var p=0;p<$zongpage;p++){
+                                var int=p+1;
+                                pagi+='<b class="page2 articleHot_p"><a href="/index/article?page='+int+'">'+int+'</a></b>'
+                            }
+                            $('.articleHot_p').remove();
+                            $('#articleHot_p').prepend(pagi);
+                            var data=data2.slice(offset,offset+pagelino);
                             for(var i in data){
                                 div+= "<div class='articlelist HotList' id='HotList'>"+
                                         "<h3><a class='artlink' href='/index/article/ArtMinuteHot?id="+data[i].message_id+"'>"+data[i].message_title+"</a></h3>"+
@@ -200,6 +218,7 @@
                             }
                             $('.HotList').remove();
                             $('#articleHot').prepend(div);
+
                         }else{
                             let option = {
                                 hook: {
@@ -245,8 +264,26 @@
                     dataType:"json",
                     success:function(res){
                         if(res.error==200){
-                            var data=res.data
+                            var data2=res.data
                             var div="";
+                            //总条数
+                            var count=data2.length;
+//                        每页显示条数
+                            var pagelino=3;
+                            //当前页码
+                            var cpage=$('#page').val();
+//                        总页数
+                            var $zongpage=Math.ceil(count/pagelino);
+                            // 计算分页起始值
+                            var offset=(cpage-1)*pagelino;
+                            var pagi="";
+                            for(var p=0;p<$zongpage;p++){
+                                var int=p+1;
+                                pagi+='<b class="page2 activities_p"><a href="/index/article?page='+int+'">'+int+'</a></b>'
+                            }
+                            $('.activities_p').remove();
+                            $('#activities_p').prepend(pagi);
+                            var data=data2.slice(offset,offset+pagelino);
                             for(var i in data){
                                 div+= "<div class='articlelist activity' id='activity'>"+
                                         "<h3><a class='artlink' href='/index/article/ActiMinute?id="+data[i].act_id+"'>"+data[i].act_title+"</a></h3>"+
@@ -318,7 +355,7 @@
                         var pagi="";
                         for(var p=0;p<$zongpage;p++){
                             var int=p+1;
-                            pagi+='<b class="page2"><a href="/index/article?page='+int+'">'+int+'</a></b>'
+                            pagi+='<b class="page2 articleList_p"><a href="/index/article?page='+int+'">'+int+'</a></b>'
                         }
                         $('.articleList_p').remove();
                         $('#articleList_p').prepend(pagi);
