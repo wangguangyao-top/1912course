@@ -2,6 +2,8 @@
 namespace app\index\controller;
 
 use app\index\controller\Common;
+use think\Request;
+
 class Bank extends Common
 {
     public function index()
@@ -16,7 +18,13 @@ class Bank extends Common
         return view("bank",compact("class","bank"));
     }
     public function secondary(){
-        return view("secondary");
+
+        $url="http://www.tp6.com/api/bank/bank";
+        $data=file_get_contents("php://input");
+        $data=$this->http_post($url,$data);
+        $data=json_decode($data,true);
+        $cla=$data["cla"];
+        return view("secondary",compact("cla"));
     }
 
 }

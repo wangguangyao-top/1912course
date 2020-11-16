@@ -29,7 +29,7 @@
                 <h4>题库分类</h4>
                 <ul class="sortul cla_name" name="cla_name">
                     {foreach $class as $k=>$v}
-                        <li class="course_curr2"><a href="/index/bank/secondary/{$v.cla_id}">{$v.cla_name}</a></li>
+                        <li class="course_curr2"><a href="/index/bank/secondary?cla_id={$v.cla_id}">{$v.cla_name}</a></li>
                     {/foreach}
                 </ul>
                 <div class="clearh"></div>
@@ -38,27 +38,20 @@
         <div style="height:20px;border-radius:0 0 5px 5px; background:#fff;box-shadow:0 2px 4px rgba(0, 0, 0, 0.1)"></div>
     </div>
     <div class="courseright">
-        <table>
-            <tr>
-                <td>标题</td>
-                <td>题类型</td>
-                <td>题分类</td>
-                <td>题内容</td>
-            </tr>
-            {foreach $bank as $p=>$k}
-            <tr>
-                <td>{$k.bank_title}</td>
-                <td>{$k.bank_type==3?"问答题":"选择题"}</td>
-                <td>{$k.cla_name}</td>
-                <td>{$k.bank_content}</td>
-            </tr>
-            {/foreach}
-        </table>
+
+        {foreach $bank as $p=>$k}
+        <dl class="mulu">
+            <dt><a href="#" class="graylink">{$k.bank_title}&nbsp;&nbsp;</a><span>{$k.bank_type==3?"问答题":"选择题"}</span></dt>
+            <dd>{$k.bank_content}</dd>
+        </dl>
+        {/foreach}
         <div class="clearh" style="padding-top: 200px;">
 
         </div>
 
         </div>
+
+
     </div>
     <div class="clearh"></div>
 
