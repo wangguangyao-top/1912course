@@ -1,8 +1,6 @@
 {extend name="common/common"}
 {block name="body"}
     <!-- InstanceBeginEditable name="doctitle" -->
-    <title>谋刻职业教育在线测评与学习平台</title>
-
     <link rel="stylesheet" href="/css/article.css">
     <script src="/js/jquery-1.8.0.min.js"></script>
     <script src="/js/mine.js"></script>
@@ -39,15 +37,15 @@
     <!--咨询列表-->
     <div class="coursetext" id="articleList" style="display:block;">
 
-        <!--<div class="articlelist articleList" >-->
-            <!--<h3><a class="artlink" href="/index/article/ArtMinute"></a></h3>-->
-            <!--<p>2015年第一季度山西省会计从业资格考务日程安排已公布，望各位同学周知。 按照《山西省财政厅关于印发会计从业资格无纸化考试管理规定的通知》(晋财会【2014】5号)，现将我省2015年一季度会计从业资格考试考务安排如下。 一、考试时间： 1、网上报名时间：3月2...</p>-->
-            <!--<p class="artilabel">-->
-                <!--<span class="ask_label">热门资讯</span>-->
-                <!--<b class="labtime">2015-02-02</b>-->
-            <!--</p>-->
-            <!--<div class="clearh"></div>-->
-        <!--</div>-->
+<!--        <div class="articlelist articleList" >-->
+<!--            <h3><a class="artlink" href="/index/article/ArtMinute"></a></h3>-->
+<!--            <p>2015年第一季度山西省会计从业资格考务日程安排已公布，望各位同学周知。 按照《山西省财政厅关于印发会计从业资格无纸化考试管理规定的通知》(晋财会【2014】5号)，现将我省2015年一季度会计从业资格考试考务安排如下。 一、考试时间： 1、网上报名时间：3月2...</p>-->
+<!--            <p class="artilabel">-->
+<!--                <span class="ask_label">热门资讯</span>-->
+<!--                <b class="labtime">2015-02-02</b>-->
+<!--            </p>-->
+<!--            <div class="clearh"></div>-->
+<!--        </div>-->
 
 
         <div class="clearh" style="height:20px;"></div>
@@ -206,12 +204,13 @@
                             $('#articleHot_p').prepend(pagi);
                             var data=data2.slice(offset,offset+pagelino);
                             for(var i in data){
+                                var myDate = new Date(parseInt(data[i].add_time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
                                 div+= "<div class='articlelist HotList' id='HotList'>"+
                                         "<h3><a class='artlink' href='/index/article/ArtMinuteHot?id="+data[i].message_id+"'>"+data[i].message_title+"</a></h3>"+
                                         "<p></p>"+
                                         "<p class='artilabel'>"+
                                         "<span class='ask_label'>"+data[i].message_name+"</span>"+
-                                        "<b class='labtime'>"+data[i].add_time+"</b> "+
+                                        "<b class='labtime'>"+myDate+"</b> "+
                                         "</p>"+
 //                                    "<div class='clearh'></div>"+
                                         "</div>"
@@ -285,12 +284,13 @@
                             $('#activities_p').prepend(pagi);
                             var data=data2.slice(offset,offset+pagelino);
                             for(var i in data){
+                                var myDate = new Date(parseInt(data[i].add_time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
                                 div+= "<div class='articlelist activity' id='activity'>"+
                                         "<h3><a class='artlink' href='/index/article/ActiMinute?id="+data[i].act_id+"'>"+data[i].act_title+"</a></h3>"+
                                         "<p></p>"+
                                         "<p class='artilabel'>"+
                                         "<span class='ask_label'>"+data[i].act_content+"</span>"+
-                                        "<b class='labtime'>"+data[i].add_time+"</b> "+
+                                        "<b class='labtime'>"+myDate+"</b> "+
                                         "</p>"+
                                         "<div class='clearh'></div>"+
                                         "</div>"
@@ -362,12 +362,14 @@
                         var data2=data.slice(offset,offset+pagelino);
 
                         for(var i in data2){
+                            var myDate = new Date(parseInt(data2[i].add_time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
+//                            console.log(myDate);
                             div+= "<div class='articlelist artList' id='artList'>"+
                                     "<h3><a class='artlink' href='/index/article/ArtMinute?id="+data2[i].message_id+"'>"+data2[i].message_title+"</a></h3>"+
                                     "<p></p>"+
                                     "<p class='artilabel'>"+
                                     "<span class='ask_label'>"+data2[i].message_name+"</span>"+
-                                    "<b class='labtime'>"+data2[i].add_time+"</b> "+
+                                    "<b class='labtime'>"+myDate+"</b> "+
                                     "</p>"+
                                     "<div class='clearh'></div>"+
                                     "</div>"
