@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="/css/tab.css" media="screen">
 <script src="/js/jquery.tabs.js"></script>
 <script src="/js/mine.js"></script>
+<link rel="stylesheet" href="/layui/css/layui.css" media="all">
+<!--<link rel="stylesheet" href="/css/style.css"/>-->
 <!-- InstanceBeginEditable name="EditRegion1" -->
 <div class="coursecont" style="background: none repeat scroll 0 0 #fff;border-radius: 3px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" >
     <h3 class="righttit" style="padding-left:50px;">优秀讲师</h3>
@@ -23,9 +25,40 @@
         <div class="clearh"></div>
     </div>
     {/foreach}
+    <span class="morecourse" style="padding-left: 500px;"><button class="layui-btn layui-btn-lg layui-btn-radius layui-btn-normal" id="but">再瞅瞅</button></span>
 </div>
 <!-- InstanceEndEditable -->
 
 
 <div class="clearh"></div>
+<script>
+    //加载更多
+    $(document).on("click","#but",function(){
+        var number=$(this).parents('.crdiv').find('.one:last').data('one');
+        var cate_id=$('.current').data('id');
+        var url='__APIURL__/api/Lect/teacherlect';
+        var data={cate_id:cate_id,number:number}
+        $.ajax({
+            type:'post',
+            url:url,
+            data:data,
+            dataType:'json',
+            async: false,
+            success:function (res) {
+                if(res==1000){
+                    alert('我也是有底线的')
+                }else{
+                    var str="";
+                    for( var a in res){
+                        var noe=1*a+1*1;
+                        noe=1*noe+number*1;
+                        str+=  '<li class="one" data-one="'+noe+'"> <div class="courselist" id="ima"> <a href="/index/course/coursePage?cate_id='+cate_id+'"><img width="263" style="border-radius:3px 3px 0 0;" src="http://www.tp7.com/uploads/'+res[a].course_image+'" ></a> <a href="/index/course/coursePage?cate_id='+cate_id+'"><p class="courTit">'+res[a].course_name+'</p></a> <div class="gray"> <span>1小时前更新</span> <span class="sp1">1234643人学习</span> <div style="clear:both"></div> </div> </div> </li>'
+                    }
+                    str+= '<div class="clearh"></div>';
+                    $('.courseul').append(str);
+                }
+            }
+        })
+    })
+</script>
 {/block}
