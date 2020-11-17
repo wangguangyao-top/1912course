@@ -72,8 +72,9 @@
             data: data,
             dataType: 'json',
             success: function (info) {
-                var str = '';
-                str += `<div class="course_img"><img src="__IMGURL__` + info.data.course.course_image + `" width="500"></div>
+                if(info.code==200){
+                    var str = '';
+                    str += `<div class="course_img"><img src="__IMGURL__` + info.data.course.course_image + `" width="500"></div>
                    <div class="coursetitle">
                    <a class="state">更新中</a>
                    <h2 class="courseh2">` + info.data.course.course_name + `</h2>
@@ -83,7 +84,7 @@
                    <p class="courstime">讲师：` + info.data.lect.lect_name + `</p>
                    <p class="courstime">课程评价：<img width="71" height="14" src="/images/evaluate5.png">&nbsp;&nbsp;<span class="hidden-sm hidden-xs">5.0分（10人评价）</span></p>
                <!--<p><a class="state end">完结</a></p>-->
-                   <span class="coursebtn"><a class="btnlink" href="/index/course/coursePage2">加入学习</a><a class="codol fx" href="javascript:void(0);" onClick="$('#bds').toggle();">分享课程</a><a class="codol sc" href="#">收藏课程</a></span>
+                   <span class="coursebtn"><a class="btnlink" href="/index/course/coursePage2?course_id=`+ info.data.course.course_id+`">加入学习</a><a class="codol fx" href="javascript:void(0);" onClick="$('#bds').toggle();">分享课程</a><a class="codol sc" href="#">收藏课程</a></span>
                    <div style="clear:both;"></div>
                    <div id="bds">
                    <div class="bdsharebuttonbox">
@@ -95,17 +96,17 @@
                    <a href="#" class="bds_more" data-cmd="more"></a>
                    <a class="bds_count" data-cmd="count"></a>
                    </div>`
-                str += `window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"24"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api//js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)]`;
-                str += `</div></div><div class="clearh"></div>`;
-                $('.coursepic').append(str);
-                var myDate = new Date(parseInt(info.data.course.add_time) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
-                var str1 = '';
-                str1 = `<p>` + info.data.course.course_notice + `<br/>
+                    str += `window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"24"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api//js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)]`;
+                    str += `</div></div><div class="clearh"></div>`;
+                    $('.coursepic').append(str);
+                    var myDate = new Date(parseInt(info.data.course.add_time) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
+                    var str1 = '';
+                    str1 = `<p>` + info.data.course.course_notice + `<br/>
                             <span class="gonggao_time">` + myDate + `</span>
                           </p>
                            <div class="clearh"></div>`
-                $('.gonggao').append(str1);
-                var str2=''
+                    $('.gonggao').append(str1);
+                    var str2=''
                     str2+=`<div class="cr1">
                             <h3 class="righttit">授课讲师</h3>
                             <div class="teacher">
@@ -119,16 +120,19 @@
                             </div>
                         </div>`
                     $('.ctext2').append(str2);
-                var str3='';
+                    var str3='';
                     str3=`<h3 class="leftit">课程简介</h3>
                             <p class="coutex">`+info.data.course.course_desc+`</p>
                             <div class="clearh"></div>
                             <h3 class="leftit">课程目录</h3>
                             <dl class="mulu">
-                                <dt><a href="/index/course/coursePage2" class="graylink">第一章&nbsp;&nbsp;总论</a></dt>
-                                <dd>内容包括会计基础、财经法规和职业道德、电算化三科视频课程全系列。内容包括会计基础、财经法规和职业道德、电算化三科视频课程全系列</dd>
+                                <dt><a href="/index/course/coursePage2?course_id=`+ info.data.course.course_id+`" class="graylink">`+info.data.cateLog.catalog_name+`</a></dt>
+                                <dd>`+info.data.cateLog.catalog_desc+`</dd>
                             </dl>`;
                     $('.coursetext').append(str3);
+                }else{
+                    alert(info.msg);
+                }
             }
         })
     })
