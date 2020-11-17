@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="./js/jquery-1.8.0.min.js"></script>
+</head>
+<body>
+<div id="per_box" style="width: 350px; height: 15px; background-color: #cccccc">
+    <div id="per" style="width: 0%; height: 100%; background-color: #007CD5"></div>
+    <span id="per_num"></span>
+</div>
+<br />
+<input type="file" name="file_tag" id="file_tag">
+<input type="button" value="上传" id = "upload_btn">
+</body>
+</html>
+
+<script>
+    $(document).ready(function(){
+        $("#upload_btn").click(function(){
+            var files = $("#file_tag")[0].files[0];
+            if(!files){
+                $("#file_tag").trigger("click");
+            }
+            var chunk;//当前页面数值
+            upload(files);
+        });
+
+
+        function upload(file){
+            var tmpName = file.size+"_chunk";
+            var every_size=100*100;//每一页传递的数据
+            var chunks = Math.ceil(file.size /every_size);//一共多少页
+            chunk = window.localStorage.getItem(tmpName) || 1;
+            chunk = parseInt(chunk);
+            var offset = (chunk-1) * every_size;//开始位置
+            var limit = chunk * every_size > file.size  ? file.size : chunk * every_size;
+
+            var page = file.slice(offset,limit);//获取一页的数据
+            var form = new FormData();//这是一个表单的对象
+            form.append("page",page);//类似于一个input框
+            form.append("filename",file.name);//文件名字
+            var per = ((limit/file.size) * 100).toFixed(1);
+            $.ajax({
+                type : "post",
+                data:form,
+                processData : false,//取消服务器对上传文件线程控制
+                contentType : false,//取消服务器设置上传文件的类型
+                cache : false,//不需要服务器设置缓存
+                dataType : 'json',
+                url : "/upload.php",
+                success:function(msg){
+                    if(chunk >= chunks ){
+                        $("#per").css({width:"100%"});
+                        $("#per_num").text(100+"%");
+                    }else{
+                        chunk++;
+                        window.localStorage.setItem(tmpName,chunk);
+                        $("#per").css({width:per+"%"});
+                        $("#per_num").text(per+"%");
+                        upload(file);
+                    }
+                }
+            });
+        }
+    });
+</script>
