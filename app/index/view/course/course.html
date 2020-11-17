@@ -81,7 +81,7 @@
                     $('.page').append(str2);
                     var data2=data.slice(offset,offset+page);
                     for(var i in data2){
-                        str+='<li><div class="courselist"><a href="/index/course/coursePage?course_id='+data2[i].course_id+'" target="_blank"><img style="border-radius:3px 3px 0 0;" width="240" src="__IMGURL__/uploads/'+data2[i].course_image+'" title="'+data2[i].course_name+'"></a><p class="courTit"><a href="/index/course/coursePage" target="_blank">'+data2[i].course_name+'</a></p><div class="gray"> <span>30课时 600分钟</span> <span class="sp1">1255555人学习</span> <div style="clear:both"></div> </div> </div> </li>';
+                        str+='<li><div class="courselist"><a href="/index/course/coursePage?course_id='+data2[i].course_id+'" target="_blank"><img style="border-radius:3px 3px 0 0;" width="240" src="__IMGURL__/uploads/'+data2[i].course_image+'" title="'+data2[i].course_name+'"></a><p class="courTit"><a href="/index/course/coursePage?course_id='+data2[i].course_id+'" target="_blank">'+data2[i].course_name+'</a></p><div class="gray"> <span>30课时 600分钟</span> <span class="sp1">1255555人学习</span> <div style="clear:both"></div> </div> </div> </li>';
                     }
                     $('.courseulr').append(str);
                 }
